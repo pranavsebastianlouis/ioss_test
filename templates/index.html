@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-3">Shorten a URL</h1>
+        <form method="post" novalidate>
+          <div class="mb-3">
+            <label class="form-label">Original URL</label>
+            <input required type="url" name="original_url" class="form-control" placeholder="https://example.com/very/long/link" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">
+              Custom alias (optional)
+              <span class="text-muted fw-normal">(letters/numbers/_/-, 3–32 chars)</span>
+            </label>
+            <input type="text" name="custom_code" class="form-control" placeholder="Place your code here!" />
+          </div>
+          <button class="btn btn-primary" type="submit">Create short link</button>
+        </form>
+
+        {% if short_url %}
+          <hr class="my-4">
+          <div class="alert alert-success">
+            <div class="d-flex flex-column gap-2">
+              <div>
+                <strong>Your short link:</strong>
+                <code class="code-badge">{{ short_url }}</code>
+              </div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-secondary btn-sm" onclick="navigator.clipboard.writeText('{{ short_url }}')">Copy</button>
+                <a class="btn btn-outline-primary btn-sm" href="{{ short_url }}" target="_blank">Open</a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if latest %}
+      <div class="mt-4">
+        <h2 class="h5 mb-2">Recent links</h2>
+        <div class="list-group">
+          {% for item in latest %}
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+               href="{{ url_for('follow', code=item.code) }}" target="_blank">
+              <div class="text-truncate" style="max-width: 75%;">
+                <div class="fw-semibold">{{ request.host_url ~ item.code }}</div>
+                <small class="text-muted text-truncate d-block">{{ item.original_url }}</small>
+              </div>
+              <span class="badge text-bg-secondary rounded-pill">{{ item.clicks }} clicks</span>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

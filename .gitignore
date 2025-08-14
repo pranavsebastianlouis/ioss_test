@@ -1,0 +1,34 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Database files
+*.db
+*.sqlite3
+
+# Environment variables
+.env
+*.env
+
+# VSCode settings
+.vscode/
+*.code-workspace
+
+# Logs
+*.log
+
+# Docker
+*.pid
+*.seed
+docker-compose.override.yml
+
+# System files
+.DS_Store
+Thumbs.db

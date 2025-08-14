@@ -8,3 +8,5 @@ services:
     volumes:
       - .:/app
     restart: always
+    environment:
+      - PORT=5000
